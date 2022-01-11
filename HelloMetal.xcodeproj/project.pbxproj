@@ -11,6 +11,8 @@
 		BA8563D2278CB8B400D8D599 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8563D1278CB8B400D8D599 /* ViewController.swift */; };
 		BA8563D4278CB8B600D8D599 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA8563D3278CB8B600D8D599 /* Assets.xcassets */; };
 		BA8563D7278CB8B600D8D599 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA8563D5278CB8B600D8D599 /* Main.storyboard */; };
+		BA8563DF278CE30800D8D599 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8563DE278CE30800D8D599 /* Renderer.swift */; };
+		BA8563E5278CF54F00D8D599 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = BA8563E4278CF54F00D8D599 /* Shaders.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +22,10 @@
 		BA8563D3278CB8B600D8D599 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA8563D6278CB8B600D8D599 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BA8563D8278CB8B600D8D599 /* HelloMetal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HelloMetal.entitlements; sourceTree = "<group>"; };
+		BA8563DE278CE30800D8D599 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		BA8563E0278CF3E700D8D599 /* ShaderDefinitions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderDefinitions.h; sourceTree = "<group>"; };
+		BA8563E1278CF45300D8D599 /* HelloMetal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HelloMetal-Bridging-Header.h"; sourceTree = "<group>"; };
+		BA8563E4278CF54F00D8D599 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +63,10 @@
 				BA8563D3278CB8B600D8D599 /* Assets.xcassets */,
 				BA8563D5278CB8B600D8D599 /* Main.storyboard */,
 				BA8563D8278CB8B600D8D599 /* HelloMetal.entitlements */,
+				BA8563DE278CE30800D8D599 /* Renderer.swift */,
+				BA8563E0278CF3E700D8D599 /* ShaderDefinitions.h */,
+				BA8563E1278CF45300D8D599 /* HelloMetal-Bridging-Header.h */,
+				BA8563E4278CF54F00D8D599 /* Shaders.metal */,
 			);
 			path = HelloMetal;
 			sourceTree = "<group>";
@@ -93,6 +103,7 @@
 				TargetAttributes = {
 					BA8563CB278CB8B400D8D599 = {
 						CreatedOnToolsVersion = 13.2.1;
+						LastSwiftMigration = 1320;
 					};
 				};
 			};
@@ -131,7 +142,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA8563E5278CF54F00D8D599 /* Shaders.metal in Sources */,
 				BA8563D2278CB8B400D8D599 /* ViewController.swift in Sources */,
+				BA8563DF278CE30800D8D599 /* Renderer.swift in Sources */,
 				BA8563D0278CB8B400D8D599 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -270,6 +283,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = HelloMetal/HelloMetal.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -286,6 +300,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.example.HelloMetal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "HelloMetal/HelloMetal-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -295,6 +311,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = HelloMetal/HelloMetal.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -311,6 +328,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.example.HelloMetal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "HelloMetal/HelloMetal-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
