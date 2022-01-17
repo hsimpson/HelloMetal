@@ -37,6 +37,9 @@ class ViewController: NSViewController {
         }
         renderer = tempRenderer
         mtkView.delegate = renderer
+        
+        mtkView.frame.size.width = 1280
+        mtkView.frame.size.height = 720
     }
 
     override var representedObject: Any? {
