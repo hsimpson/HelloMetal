@@ -19,15 +19,22 @@ class Renderer : NSObject, MTKViewDelegate {
     var currentTime: Double = 0
     let gpuLock = DispatchSemaphore(value: 1)
     
+    let sampleCount: Int = 4
+    
     // This is the initializer for the Renderer class.
     // We will need access to the mtkView later, so we add it as a parameter here.
     init?(mtkView: MTKView) {
         device = mtkView.device!
+        
+        if (sampleCount > 1) {
+            mtkView.sampleCount = sampleCount
+        }
+        
         commandQueue = device.makeCommandQueue()!
         
         // Create the Render Pipeline
         do {
-            pipelineState = try Renderer.buildRenderPipelineWith(device: device, metalKitView: mtkView)
+            pipelineState = try Renderer.buildRenderPipelineWith(device: device, metalKitView: mtkView, sampleCount: sampleCount)
         } catch {
             print("Unable to compile render pipeline state: \(error)")
             return nil
@@ -66,6 +73,11 @@ class Renderer : NSObject, MTKViewDelegate {
         
         // Change default settings. For example, we change the clear color from black to red.
         renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0, 0, 0, 1)
+        
+        if (sampleCount > 1) {
+            renderPassDescriptor.colorAttachments[0].texture = view.multisampleColorTexture
+            renderPassDescriptor.colorAttachments[0].resolveTexture = view.currentDrawable?.texture
+        }
         
         // We compile renderPassDescriptor to a MTLRenderCommandEncoder
         guard let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else { return }
@@ -111,7 +123,7 @@ class Renderer : NSObject, MTKViewDelegate {
     }
     
     // Create our custom rendering pipeline, which loads shaders using `device`, and outputs to the format of `metalKitView`
-    class func buildRenderPipelineWith(device: MTLDevice, metalKitView: MTKView) throws -> MTLRenderPipelineState {
+    class func buildRenderPipelineWith(device: MTLDevice, metalKitView: MTKView, sampleCount: Int) throws -> MTLRenderPipelineState {
         // Create a new pipeline descriptor
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         
@@ -122,6 +134,10 @@ class Renderer : NSObject, MTKViewDelegate {
         
         // Setup the output pixel format to match the pixel format of the metal kit view
         pipelineDescriptor.colorAttachments[0].pixelFormat = metalKitView.colorPixelFormat
+        
+        if (sampleCount > 1) {
+            pipelineDescriptor.rasterSampleCount = sampleCount
+        }
         
         // Compile the configured pipeline descriptor to a pipeline state object
         return try device.makeRenderPipelineState(descriptor: pipelineDescriptor)
